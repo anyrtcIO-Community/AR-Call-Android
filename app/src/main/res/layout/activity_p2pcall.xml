@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_rtc_videos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_space"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageButton
+                android:id="@+id/btn_camare"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:background="@null"
+                android:onClick="OnBtnClicked"
+                android:src="@drawable/selector_camera"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/btn_camare"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/pop_blue" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_type"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_type"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+    <org.anyrtc.p2p.widgets.CircleImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_above="@+id/tv_userid"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/icon"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp" />
+
+    <Button
+        android:id="@+id/btn_change_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_btns"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@null"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:drawableTop="@drawable/img_change_audio"
+        android:onClick="OnBtnClicked"
+        android:text="转到语音聊天" />
+
+    <LinearLayout
+        android:id="@+id/ll_btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp">
+
+        <ImageButton
+            android:id="@+id/ibtn_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="OnBtnClicked"
+            android:src="@drawable/img_accept"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/ibtn_audio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="OnBtnClicked"
+            android:src="@drawable/selector_audio_manager"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/ibtn_hang_up"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="OnBtnClicked"
+            android:src="@drawable/hang_up" />
+
+        <ImageButton
+            android:id="@+id/ibtn_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="OnBtnClicked"
+            android:src="@drawable/selector_video_manager"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/ibtn_voice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="OnBtnClicked"
+            android:src="@drawable/selector_voice"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"></Chronometer>
+</RelativeLayout>

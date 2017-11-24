@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">anyRTC点对点</string>
+    <string name="str_p2p_call">呼叫</string>
+    <string name="str_p2p_hangup">挂断</string>
+</resources>

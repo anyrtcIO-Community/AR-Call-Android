@@ -4,11 +4,11 @@ anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多�
 
 ### 项目展示
 ![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p1.png)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p2.png)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p3.png)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p4.png)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p5.png)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p6.png)
+![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p2.jpg)
+![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p3.jpg)
+![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p4.jpg)
+![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p5.jpg)
+![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p6.jpg)
 
 
 ### app体验

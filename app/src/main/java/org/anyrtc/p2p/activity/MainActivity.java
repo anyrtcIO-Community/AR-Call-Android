@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
     @Override
     public void initView(Bundle savedInstanceState) {
         registerMessageReceiver();
-        mImmersionBar.keyboardEnable(true).init();
+        mImmersionBar.keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN).init();
         tvCall = (TextView) findViewById(R.id.tv_call);
         tvGo = (TextView) findViewById(R.id.tv_go_pre);
         tvId = (TextView) findViewById(R.id.tv_userid);

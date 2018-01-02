@@ -18,6 +18,51 @@ anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多�
 ##### [点击下载](https://www.pgyer.com/anyrtc_p2p_android)
 
 
+### SDK集成
+# > 方式一（推荐）
+
+添加Jcenter仓库 Gradle依赖：
+
+```
+dependencies {
+   compile 'org.anyrtc:rtp2pcall_kit:2.1'
+}
+```
+
+或者 Maven
+```
+<dependency>
+  <groupId>org.anyrtc</groupId>
+  <artifactId>rtp2pcall_kit</artifactId>
+  <version>2.1</version>
+  <type>pom</type>
+</dependency>
+```
+
+>方式二
+
+ [下载aar SDK](https://www.anyrtc.io/resoure)
+
+>1. 将下载好的rtp2pcall_kit-release.aar文件放入项目的libs目录中
+>2. 在Model下的build.gradle文件添加如下代码依赖P2P SDK
+
+```
+android
+{
+
+ repositories {
+        flatDir {dirs 'libs'}
+    }
+    
+ }
+    
+```
+```
+dependencies {
+    compile(name: 'rtp2pcall_kit-release.aar', ext: 'aar')
+}
+```
+
 ### 安装
 
 ##### 编译环境

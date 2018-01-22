@@ -40,8 +40,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile(name:'rtp2pcall_kit-release',ext:'aar')
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'org.anyrtc:rtp2pcall_kit:2.3'
     testCompile 'junit:junit:4.12'
     compile 'cn.jiguang.sdk:jpush:3.0.9'
     // 此处以JPush 3.0.9 版本为例。

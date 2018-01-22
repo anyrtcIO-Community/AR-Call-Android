@@ -19,7 +19,8 @@ anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多�
 
 
 ### SDK集成
-# > 方式一（推荐）
+# > 方式一（推荐）[ ![Download](https://api.bintray.com/packages/dyncanyrtc/anyrtc_dev/anyRTC-P2P-Android/images/download.svg) ](https://bintray.com/dyncanyrtc/anyrtc_dev/anyRTC-P2P-Android/_latestVersion)
+
 
 添加Jcenter仓库 Gradle依赖：
 

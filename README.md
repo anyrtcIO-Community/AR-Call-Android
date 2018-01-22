@@ -26,7 +26,7 @@ anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多�
 
 ```
 dependencies {
-   compile 'org.anyrtc:rtp2pcall_kit:2.1'
+   compile 'org.anyrtc:rtp2pcall_kit:2.3'  //最新版见上面Download
 }
 ```
 

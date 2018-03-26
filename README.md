@@ -25,7 +25,7 @@ anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多�
 
 ```
 dependencies {
-   compile 'org.anyrtc:rtp2pcall_kit:2.1'
+   compile 'org.anyrtc:rtp2pcall_kit:2.3.1'
 }
 ```
 
@@ -34,7 +34,7 @@ dependencies {
 <dependency>
   <groupId>org.anyrtc</groupId>
   <artifactId>rtp2pcall_kit</artifactId>
-  <version>2.1</version>
+  <version>2.3.1</version>
   <type>pom</type>
 </dependency>
 ```

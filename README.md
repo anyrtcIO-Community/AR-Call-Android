@@ -1,3 +1,8 @@
+### 更新日志
+
+2018-6-21
+1：升级至最新SDK
+
 ### anyRTC-P2P-Android SDK for Android
 ### 简介
 anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼叫模式，基于RTCP2PEngine SDK，适用于网络电话、活动、教育等多种呼叫场景。。
@@ -26,7 +31,7 @@ anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多�
 
 ```
 dependencies {
-   compile 'org.anyrtc:rtp2pcall_kit:2.3.1'
+   compile 'org.anyrtc:rtp2pcall_kit:2.3.3'
 }
 ```
 

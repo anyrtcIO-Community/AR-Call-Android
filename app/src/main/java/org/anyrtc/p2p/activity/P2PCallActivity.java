@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.anyrtc.common.enums.AnyRTCP2PMediaType;
-import org.anyrtc.common.enums.AnyRTCVideoMode;
+import org.anyrtc.common.enums.AnyRTCVideoQualityMode;
 import org.anyrtc.common.utils.AnyRTCAudioManager;
 import org.anyrtc.p2p.P2PApplication;
 import org.anyrtc.p2p.R;
@@ -186,7 +186,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
 //            if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_MONITOR) {
 ////                if (mIsCalled) {
                     VideoRenderer render = mVideoView.OnRtcOpenLocalRender();
-                    mP2PKit.setLocalVideoCapturer(render.GetRenderPointer(), true, AnyRTCVideoMode.AnyRTC_Video_HD);
+                    mP2PKit.setLocalVideoCapturer(render.GetRenderPointer(), true, AnyRTCVideoQualityMode.AnyRTCVideoQuality_Medium2);
 //                }
 //            } else {
 //                VideoRenderer render = mVideoView.OnRtcOpenLocalRender();

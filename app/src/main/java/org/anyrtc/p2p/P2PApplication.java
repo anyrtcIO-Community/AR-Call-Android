@@ -42,7 +42,7 @@ public class P2PApplication extends Application implements Application.ActivityL
         registerActivityLifecycleCallbacks(this);
 
         //初始化P2P引擎并设置开发者信息  开发者信息可去anyrtc.io官网注册获取
-        AnyRTCP2PEngine.Inst().InitEngineWithAnyrtcInfo(getApplicationContext(),"", "", "", "");
+        AnyRTCP2PEngine.Inst().initEngineWithAnyrtcInfo(getApplicationContext(),"", "", "", "");
         //配置私有云  没有可不填写
 //        AnyRTCP2PEngine.Inst().ConfigServerForPriCloud("", 0);
         mDBDao=new DBDao(this);

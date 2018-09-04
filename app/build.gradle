@@ -42,7 +42,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
-    compile 'org.anyrtc:rtp2pcall_kit:2.3.7'
+    compile 'org.anyrtc:rtp2pcall_kit:latest.integration'
     testCompile 'junit:junit:4.12'
     compile 'cn.jiguang.sdk:jpush:3.0.9'
     // 此处以JPush 3.0.9 版本为例。

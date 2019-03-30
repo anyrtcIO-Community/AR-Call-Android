@@ -1,13 +1,17 @@
 package org.anyrtc.p2p.widgets;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import org.anyrtc.common.utils.ScreenUtils;
 import org.anyrtc.p2p.R;
 import org.webrtc.EglBase;
+import org.webrtc.EglRenderer;
 import org.webrtc.PercentFrameLayout;
 import org.webrtc.RendererCommon;
 import org.webrtc.SurfaceViewRenderer;
@@ -16,6 +20,8 @@ import org.webrtc.VideoRenderer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import static android.view.View.VISIBLE;
 
 /**
  * Created by Eric on 2016/7/26.
@@ -43,7 +49,7 @@ public class RTCVideoView implements RTCViewHelper, View.OnTouchListener {
         public SurfaceViewRenderer mView = null;
         public VideoRenderer mRenderer = null;
         private RelativeLayout layoutCamera = null;
-
+        private FrameLayout flLoading; //视频显示前的Loading
         public VideoView(String strPeerId, Context ctx, EglBase eglBase, int index, int x, int y, int w, int h) {
             this.strPeerId = strPeerId;
             this.index = index;
@@ -58,6 +64,7 @@ public class RTCVideoView implements RTCViewHelper, View.OnTouchListener {
             View view = View.inflate(ctx, R.layout.layout_top_right, null);
             mView = (SurfaceViewRenderer) view.findViewById(R.id.suface_view);
             layoutCamera = (RelativeLayout) view.findViewById(R.id.layout_camera);
+            flLoading = (FrameLayout) view.findViewById(R.id.fl_video_loading);
             mView.init(eglBase.getEglBaseContext(), null);
             mView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
             mLayout.addView(view);
@@ -347,6 +354,20 @@ public class RTCVideoView implements RTCViewHelper, View.OnTouchListener {
         mLocalRender.mLayout.setPosition(
                 mLocalRender.x, mLocalRender.y, mLocalRender.w, mLocalRender.h);
         mLocalRender.mView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
+        mLocalRender.flLoading.setVisibility(VISIBLE);
+        mLocalRender.mView.addFrameListener(new EglRenderer.FrameListener() {
+            @Override
+            public void onFrame(Bitmap frame) {
+                Log.d("surfaceView", frame.toString());
+                mLocalRender.mView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLocalRender.flLoading.setVisibility(View.GONE);
+                    }
+                });
+
+            }
+        }, 1f);
         mLocalRender.mRenderer = new VideoRenderer(mLocalRender.mView);
         mLocalRender.mLayout.setBackgroundResource(R.drawable.background);
         return mLocalRender.mRenderer;
@@ -380,6 +401,21 @@ public class RTCVideoView implements RTCViewHelper, View.OnTouchListener {
             remoteRender.mLayout.setPosition(
                     remoteRender.x, remoteRender.y, remoteRender.w, remoteRender.h);
             remoteRender.mView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
+            remoteRender.flLoading.setVisibility(VISIBLE);
+            final VideoView finalRemoteRender = remoteRender;
+            remoteRender.mView.addFrameListener(new EglRenderer.FrameListener() {
+                @Override
+                public void onFrame(Bitmap frame) {
+                    Log.d("surfaceView", frame.toString());
+                    finalRemoteRender.mView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            finalRemoteRender.flLoading.setVisibility(View.GONE);
+                        }
+                    });
+
+                }
+            }, 1f);
             remoteRender.mRenderer = new VideoRenderer(remoteRender.mView);
 
             mRemoteRenders.put(strRtcPeerId, remoteRender);
@@ -464,6 +500,21 @@ public class RTCVideoView implements RTCViewHelper, View.OnTouchListener {
             remoteRender.mLayout.setPosition(
                     remoteRender.x, remoteRender.y, remoteRender.w, remoteRender.h);
             remoteRender.mView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
+            remoteRender.flLoading.setVisibility(VISIBLE);
+            final VideoView finalRemoteRender = remoteRender;
+            remoteRender.mView.addFrameListener(new EglRenderer.FrameListener() {
+                @Override
+                public void onFrame(Bitmap frame) {
+                    Log.d("surfaceView", frame.toString());
+                    finalRemoteRender.mView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            finalRemoteRender.flLoading.setVisibility(View.GONE);
+                        }
+                    });
+
+                }
+            }, 1f);
             remoteRender.mRenderer = new VideoRenderer(remoteRender.mView);
             mRemoteRenders.put(strRtcPeerId, remoteRender);
         }

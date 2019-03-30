@@ -6,11 +6,12 @@ android {
 
     defaultConfig {
         applicationId "org.anyrtc.p2p"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         ndk {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
@@ -29,7 +30,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     repositories {
         flatDir {
             dirs 'libs'
@@ -42,14 +42,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
-    compile 'org.anyrtc:rtp2pcall_kit:latest.integration'
+    compile ('org.anyrtc:rtp2pcall_kit:2.4.7')
+        { exclude group: 'com.android.support'}
     testCompile 'junit:junit:4.12'
     compile 'cn.jiguang.sdk:jpush:3.0.9'
     // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'
     // 此处以JCore 1.1.7 版本为例。
     compile 'com.yanzhenjie:permission:1.1.0'
-
+    compile 'com.android.support:multidex:1.0.3'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
 

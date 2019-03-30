@@ -13,32 +13,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.anyrtc.common.enums.AnyRTCP2PMediaType;
-import org.anyrtc.common.enums.AnyRTCVideoQualityMode;
 import org.anyrtc.common.utils.AnyRTCAudioManager;
 import org.anyrtc.p2p.P2PApplication;
 import org.anyrtc.p2p.R;
 import org.anyrtc.p2p.model.CallRecord;
 import org.anyrtc.p2p.widgets.CircleImageView;
 import org.anyrtc.p2p.widgets.RTCVideoView;
+import org.anyrtc.rtp2pcall.ARP2PCallMode;
+import org.anyrtc.rtp2pcall.ARP2PKit;
 import org.anyrtc.rtp2pcall.AnyRTCP2PEngine;
-import org.anyrtc.rtp2pcall.RTP2PCallHelper;
-import org.anyrtc.rtp2pcall.RTP2PCallKit;
 import org.webrtc.VideoRenderer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class P2PCallActivity extends BaseActivity implements Chronometer.OnChronometerTickListener,RTP2PCallHelper {
+public class P2PCallActivity extends BaseActivity implements Chronometer.OnChronometerTickListener {
     private boolean misCalling = false;
     public static boolean IS_CALLING = false;
 
-    private RTP2PCallKit mP2PKit;
+    private ARP2PKit mP2PKit;
     private RTCVideoView mVideoView;
     private String mUserId, mCallid;
     private boolean mIsCalled; //是否是被呼叫
-    private AnyRTCP2PMediaType mP2PModel;
+    private ARP2PCallMode mP2PModel;
     MediaPlayer player;
     Chronometer chronometer;
     SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
@@ -146,7 +144,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
         }
         if (p2p_mode == 0) {
             //视频呼叫
-            mP2PModel = AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO.RT_P2P_CALL_VIDEO;
+            mP2PModel = ARP2PCallMode.video;
             if (mIsCalled) {
                 beCalledByOther_Video();
             } else {
@@ -154,7 +152,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             }
         } else if (p2p_mode == 1) {
             //视频PRO呼叫（被呼叫者可以先看到呼叫者的视频）
-            mP2PModel =  AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO.RT_P2P_CALL_VIDEO_PRO;
+            mP2PModel =  ARP2PCallMode.video_pro;
             if (mIsCalled) {
                 beCalledByOther_Video_pre();
             } else {
@@ -162,7 +160,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             }
         } else if (p2p_mode == 2) {
             //音频呼叫
-            mP2PModel =  AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO.RT_P2P_CALL_AUDIO;
+            mP2PModel =  ARP2PCallMode.audio;
             if (mIsCalled) {
                 beCalledByOther_Audio();
             } else {
@@ -170,7 +168,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             }
 
         }else if (p2p_mode ==3){
-            mP2PModel =  AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO.RT_P2P_CALL_MONITOR;
+            mP2PModel =   ARP2PCallMode.monitor;
             if (mIsCalled) {
                 beCalledByOther_Watch();
             } else {
@@ -179,14 +177,14 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
 
         }
 
+
         mP2PKit = P2PApplication.the().getmP2pKit();
-        mP2PKit.setP2PCallHelper(this);
         mVideoView = new RTCVideoView((RelativeLayout) findViewById(R.id.rl_rtc_videos), this, AnyRTCP2PEngine.Inst().Egl());
-        if (mP2PModel !=  AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO.RT_P2P_CALL_AUDIO) {
+        if (mP2PModel !=   ARP2PCallMode.audio) {
 //            if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_MONITOR) {
 ////                if (mIsCalled) {
                     VideoRenderer render = mVideoView.OnRtcOpenLocalRender();
-                    mP2PKit.setLocalVideoCapturer(render.GetRenderPointer(), true, AnyRTCVideoQualityMode.AnyRTCVideoQuality_Medium2);
+                    mP2PKit.setLocalVideoCapturer(render.GetRenderPointer());
 //                }
 //            } else {
 //                VideoRenderer render = mVideoView.OnRtcOpenLocalRender();
@@ -240,14 +238,14 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
                 state=0;
                 callRecord.setState(state);
                 mP2PKit.accpetCall(mCallid);
-                if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_AUDIO) {
+                if (mP2PModel ==  ARP2PCallMode.audio) {
                     startAudioCall();
-                } else if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO) {
+                } else if (mP2PModel ==  ARP2PCallMode.video) {
                     startVideoCall();
-                } else if (mP2PModel== AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO_PRO){
+                } else if (mP2PModel==  ARP2PCallMode.video_pro){
                     mVideoView.preView2Normol();
                     startVideoCall();
-                }else if (mP2PModel== AnyRTCP2PMediaType.RT_P2P_CALL_MONITOR){
+                }else if (mP2PModel==  ARP2PCallMode.monitor){
                     startWatchCall();
                 }
                 break;
@@ -290,7 +288,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
                 if (mP2PKit!=null){
                     mP2PKit.swtichToAudioMode();
                     startAudioCall();
-                    mP2PModel= AnyRTCP2PMediaType.RT_P2P_CALL_AUDIO;
+                    mP2PModel=  ARP2PCallMode.audio;
                     mVideoView.OnRtcRemoveLocalRender();
                 }
                 break;
@@ -355,6 +353,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
         tvType.setText("优先视频来电");
         iv_icon.setVisibility(View.GONE);
         ivBg.setVisibility(View.GONE);
+        ibtn_accept.setVisibility(View.VISIBLE);
         tvTime.setVisibility(View.GONE);
     }
 
@@ -404,7 +403,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
         if (mIsCalled){
             btnChangeMode.setVisibility(View.GONE);
         }else {
-            if (mP2PModel== AnyRTCP2PMediaType.RT_P2P_CALL_MONITOR){
+            if (mP2PModel==  ARP2PCallMode.monitor){
                 btnChangeMode.setVisibility(View.GONE);
             }else {
                 btnChangeMode.setVisibility(View.VISIBLE);
@@ -526,9 +525,9 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             @Override
             public void run() {
                 Log.d("p2pCallBack", "OnRTCAcceptCall strPeerUserId=" + strPeerUserId);
-                if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_AUDIO) {
+                if (mP2PModel ==  ARP2PCallMode.audio) {
                     startAudioCall();
-                } else if (mP2PModel== AnyRTCP2PMediaType.RT_P2P_CALL_MONITOR){
+                } else if (mP2PModel==  ARP2PCallMode.monitor){
                     startWatchCall();
 
                 }else {
@@ -602,8 +601,8 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             public void run() {
                 Log.d("p2pCallBack", "onRTCSwithToAudioMode");
                 startAudioCall();
-                mP2PModel= AnyRTCP2PMediaType.RT_P2P_CALL_AUDIO;
-                mP2PKit.setRTCVideoRender(mCallid, 0);
+                mP2PModel=  ARP2PCallMode.audio;
+                mP2PKit.setRTCRemoteVideoRender(mCallid, 0);
                 mVideoView.OnRtcRemoveLocalRender();
                 mVideoView.OnRtcRemoveRemoteRender(mCallid);
             }
@@ -636,25 +635,25 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             public void run() {
                 Log.d("p2pCallBack", "OnRTCOpenVideoRender OnRTCOpenVideoRender=" + strDevId);
                 VideoRenderer render = null;
-                if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO) {
+                if (mP2PModel ==  ARP2PCallMode.video) {
                     render = mVideoView.OnRtcOpenRemoteRender(strDevId);
-                } else if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO_PRO) {
+                } else if (mP2PModel ==  ARP2PCallMode.video_pro) {
                     if (mIsCalled) {
                         render = mVideoView.OnRtcOpenPreViewRender(strDevId);
                     } else {
                         render = mVideoView.OnRtcOpenRemoteRender(strDevId);
                     }
 
-                }else if (mP2PModel== AnyRTCP2PMediaType.RT_P2P_CALL_MONITOR){
+                }else if (mP2PModel==  ARP2PCallMode.monitor){
                     render = mVideoView.OnRtcOpenRemoteRender(strDevId);
                 }
                 if (null != render) {
-                    mP2PKit.setRTCVideoRender(strDevId, render.GetRenderPointer());
+                    mP2PKit.setRTCRemoteVideoRender(strDevId, render.GetRenderPointer());
                 }
-                if (mP2PModel == AnyRTCP2PMediaType.RT_P2P_CALL_VIDEO_PRO){
-                    if (mIsCalled) {
-                        ibtn_accept.setVisibility(View.VISIBLE);
-                    }
+                if (mP2PModel ==  ARP2PCallMode.video_pro){
+//                    if (mIsCalled) {
+//                        ibtn_accept.setVisibility(View.VISIBLE);
+//                    }
                 }
             }
         });
@@ -671,7 +670,7 @@ public class P2PCallActivity extends BaseActivity implements Chronometer.OnChron
             public void run() {
                 Log.d("p2pCallBack", "OnRTCCloseVideoRender strDevId=" + strDevId);
                 if (null != mP2PKit) {
-                    mP2PKit.setRTCVideoRender(strDevId, 0);
+                    mP2PKit.setRTCRemoteVideoRender(strDevId, 0);
                     mVideoView.OnRtcRemoveRemoteRender(strDevId);
                 }
                 finish();

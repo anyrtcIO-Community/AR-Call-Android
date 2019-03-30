@@ -7,8 +7,8 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,14 +19,14 @@ import org.anyrtc.p2p.P2PApplication;
 import org.anyrtc.p2p.R;
 import org.anyrtc.p2p.utils.ExampleUtil;
 import org.anyrtc.p2p.utils.SharePrefUtil;
-import org.anyrtc.rtp2pcall.RTP2PCallKit;
+import org.anyrtc.rtp2pcall.ARP2PKit;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener,BaseActivity.ConnListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     TextView tvCall, tvId, tvGo;
     private String mUserid = "";
-    private RTP2PCallKit mP2PKit;
+    private ARP2PKit mP2PKit;
     private EditText etId;
     ImageView icon;
     public static boolean isTurnOn;
@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
     @Override
     public void initView(Bundle savedInstanceState) {
         registerMessageReceiver();
-        mImmersionBar.keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN).init();
+        mImmersionBar.keyboardEnable(true).init();
         tvCall = (TextView) findViewById(R.id.tv_call);
         tvGo = (TextView) findViewById(R.id.tv_go_pre);
         tvId = (TextView) findViewById(R.id.tv_userid);
@@ -47,29 +47,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
         tvCall.setOnClickListener(this);
         tvGo.setOnClickListener(this);
         mP2PKit = P2PApplication.the().getmP2pKit();
-        setConnListener(this);
         mUserid = SharePrefUtil.getString("userid");
-        DealUserId();
-
-    }
-
-    private void DealUserId() {
-        if (!TextUtils.isEmpty(mUserid)) {
-            tvId.setText(mUserid + "");
-            mP2PKit.turnOn(mUserid);
-            init();
-        } else {
-            tvId.setText(  "");
+        if (TextUtils.isEmpty(mUserid)){
             etId.setVisibility(View.VISIBLE);
+        }else {
+            mP2PKit.turnOn(mUserid);
+            tvId.setText(mUserid + "");
+            init();
         }
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-            Back();
-    }
+
 
 
 
@@ -77,8 +66,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_go_pre:
+
                 if (!TextUtils.isEmpty(mUserid)) {
                     startAnimActivity(PreCallActivity.class);
+                    finishAnimActivity();
                     return;
                 }
                 if (TextUtils.isEmpty(etId.getText().toString().trim())){
@@ -89,6 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
                 SharePrefUtil.putString("userid",mUserid);
                 mP2PKit.turnOn(mUserid);
                 startAnimActivity(PreCallActivity.class);
+                finishAnimActivity();
                 break;
             case R.id.tv_call:
                 Uri uri = Uri.parse("tel:021-65650071");
@@ -102,6 +94,60 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    public void onConnected() {
+        if (icon!=null) {
+            icon.setImageResource(R.drawable.img_on_line);
+        }
+    }
+
+    @Override
+    public void onDisconnect(int nErrCode) {
+        if (icon!=null) {
+            icon.setImageResource(R.drawable.img_off_line);
+        }
+    }
+
+    @Override
+    public void onRTCMakeCall(String strPeerUserId, int nCallMode, String strUserData) {
+
+    }
+
+    @Override
+    public void onRTCAcceptCall(String strPeerUserId) {
+
+    }
+
+    @Override
+    public void onRTCRejectCall(String strPeerUserId, int nErrCode) {
+
+    }
+
+    @Override
+    public void onRTCEndCall(String strPeerUserId, int nErrCode) {
+
+    }
+
+    @Override
+    public void onRTCSwithToAudioMode() {
+
+    }
+
+    @Override
+    public void onRTCUserMessage(String strPeerUserId, String strMessage) {
+
+    }
+
+    @Override
+    public void onRTCOpenVideoRender(String strDevId) {
+
+    }
+
+    @Override
+    public void onRTCCloseVideoRender(String strDevId) {
 
     }
 
@@ -127,15 +173,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
     }
 
-    @Override
-    public void ConnSuccess() {
-        icon.setImageResource(R.drawable.img_on_line);
-    }
-
-    @Override
-    public void ConnOff() {
-        icon.setImageResource(R.drawable.img_off_line);
-    }
 
 
     public class MessageReceiver extends BroadcastReceiver {
@@ -170,23 +207,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,B
     protected void onDestroy() {
         super.onDestroy();
     }
-    private void Back() {
-        mUserid= SharePrefUtil.getString("userid");
-        if (!TextUtils.isEmpty(mUserid)) {
-            tvId.setText(mUserid + "");
-            etId.setVisibility(View.GONE);
-            if (isTurnOn){
-                icon.setImageResource(R.drawable.img_on_line);
-                icon.requestLayout();
-            }
-        } else {
-            tvId.setText("");
-            etId.setVisibility(View.VISIBLE);
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
         }
-
+        return super.onKeyDown(keyCode, event);
     }
-
-
-
 
 }

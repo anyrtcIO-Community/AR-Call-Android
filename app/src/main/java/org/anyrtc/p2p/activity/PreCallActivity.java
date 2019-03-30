@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ import org.anyrtc.p2p.P2PApplication;
 import org.anyrtc.p2p.R;
 import org.anyrtc.p2p.utils.ExampleUtil;
 import org.anyrtc.p2p.utils.SharePrefUtil;
-import org.anyrtc.rtp2pcall.RTP2PCallKit;
+import org.anyrtc.rtp2pcall.ARP2PKit;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -23,18 +24,21 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 
-public class PreCallActivity extends BaseActivity implements BaseActivity.ConnListener{
+public class PreCallActivity extends BaseActivity {
     private String mUserid = "";
     private TextView mTxtUserid;
     private EditText mEditText;
     private View space;
-    private RTP2PCallKit mP2PKit;
+    private ARP2PKit mP2PKit;
     CallRecordDialog mCallRecordDialog;
     private ImageView iv_icon;
     public void OnTopBtnClicked(View btn){
         switch (btn.getId()){
             case R.id.iv_back:
-                finishAnimActivity();
+                Intent home = new Intent(Intent.ACTION_MAIN);
+                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                home.addCategory(Intent.CATEGORY_HOME);
+                startActivity(home);
                 break;
             case R.id.tv_call_record:
                 if (mCallRecordDialog==null){
@@ -86,7 +90,64 @@ public class PreCallActivity extends BaseActivity implements BaseActivity.ConnLi
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-//        mP2PKit.setP2PCallHelper(this);
+        if (isOnline){
+            iv_icon.setImageResource(R.drawable.img_on_line);
+            iv_icon.requestLayout();
+        }else {
+            iv_icon.setImageResource(R.drawable.img_off_line);
+            iv_icon.requestLayout();
+        }
+    }
+
+    @Override
+    public void onConnected() {
+        iv_icon.setImageResource(R.drawable.img_on_line);
+    }
+
+    @Override
+    public void onDisconnect(int nErrCode) {
+        iv_icon.setImageResource(R.drawable.img_off_line);
+        mP2PKit.turnOn(mUserid);
+    }
+
+    @Override
+    public void onRTCMakeCall(String strPeerUserId, int nCallMode, String strUserData) {
+
+    }
+
+    @Override
+    public void onRTCAcceptCall(String strPeerUserId) {
+
+    }
+
+    @Override
+    public void onRTCRejectCall(String strPeerUserId, int nErrCode) {
+
+    }
+
+    @Override
+    public void onRTCEndCall(String strPeerUserId, int nErrCode) {
+
+    }
+
+    @Override
+    public void onRTCSwithToAudioMode() {
+
+    }
+
+    @Override
+    public void onRTCUserMessage(String strPeerUserId, String strMessage) {
+
+    }
+
+    @Override
+    public void onRTCOpenVideoRender(String strDevId) {
+
+    }
+
+    @Override
+    public void onRTCCloseVideoRender(String strDevId) {
+
     }
 
 
@@ -97,7 +158,6 @@ public class PreCallActivity extends BaseActivity implements BaseActivity.ConnLi
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setConnListener(this);
         space = findViewById(R.id.view_space);
         mImmersionBar.titleBar(space).init();
         mTxtUserid = (TextView) findViewById(R.id.txt_userid);
@@ -106,11 +166,11 @@ public class PreCallActivity extends BaseActivity implements BaseActivity.ConnLi
         mTxtUserid.setText("本机用户id：" + mUserid);
         mP2PKit = P2PApplication.the().getmP2pKit();
         iv_icon= (ImageView) findViewById(R.id.iv_icon);
+
         /**
          * 申请相机、录音权限
          */
         requestPermission(CAMERA, RECORD_AUDIO);
-
 
     }
 
@@ -198,14 +258,15 @@ public class PreCallActivity extends BaseActivity implements BaseActivity.ConnLi
                 break;
         }
     }
-
     @Override
-    public void ConnSuccess() {
-        iv_icon.setImageResource(R.drawable.img_on_line);
-    }
-
-    @Override
-    public void ConnOff() {
-        iv_icon.setImageResource(R.drawable.img_off_line);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

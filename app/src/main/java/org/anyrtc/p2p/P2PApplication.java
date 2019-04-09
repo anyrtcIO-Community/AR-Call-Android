@@ -43,7 +43,7 @@ public class P2PApplication extends Application implements Application.ActivityL
 
     public P2PApplication() {
         mInstance = this;
-        ARP2POption arp2POption = new ARP2POption();
+        ARP2POption arp2POption =ARP2PEngine.Inst().getP2POption();
         arp2POption.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile720x960);
         arp2POption.setDefaultFrontCamera(true);
         mP2pKit = new ARP2PKit();

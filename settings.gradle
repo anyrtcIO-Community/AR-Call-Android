@@ -1,1 +1,1 @@
-include ':app','rtp2pcall_kit'
+include ':app'

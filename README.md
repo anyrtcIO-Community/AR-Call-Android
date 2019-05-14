@@ -1,72 +1,36 @@
-### 更新日志
 
-2018-6-21
-1：升级至最新SDK
-
-### anyRTC-P2P-Android SDK for Android
+### AR-P2P-Android SDK for Android
 ### 简介
-anyRTC-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼叫模式，基于RTCP2PEngine SDK，适用于网络电话、活动、教育等多种呼叫场景。。
-
-### 项目展示
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p1.png)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p2.jpg)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p3.jpg)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p4.jpg)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p5.jpg)
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/p2p6.jpg)
+AR-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼叫模式，基于ARP2PEngine SDK，适用于网络电话、活动、教育等多种呼叫场景。。
 
 
 ### app体验
 
 ##### 扫码下载
-![image](https://github.com/AnyRTC/anyRTC-P2P-Android/blob/master/images/demo_qrcode.png)
-##### [点击下载](https://www.pgyer.com/anyrtc_p2p_android)
+![image](https://www.pgyer.com/app/qrcode/3blO)
+##### [点击下载](https://www.pgyer.com/app/qrcode/3blO)
 
 
 ### SDK集成
-# > 方式一（推荐）[ ![Download](https://api.bintray.com/packages/dyncanyrtc/anyrtc_dev/anyRTC-P2P-Android/images/download.svg) ](https://bintray.com/dyncanyrtc/anyrtc_dev/anyRTC-P2P-Android/_latestVersion)
+# > 方式一（推荐）[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/p2p/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/p2p/_latestVersion)
 
 
 添加Jcenter仓库 Gradle依赖：
 
 ```
 dependencies {
-   compile 'org.anyrtc:rtp2pcall_kit:2.3.3'
+   compile 'org.ar:rtp2pcall_kit:3.0.1'
 }
 ```
 
 或者 Maven
 ```
 <dependency>
-  <groupId>org.anyrtc</groupId>
+  <groupId>org.ar</groupId>
   <artifactId>rtp2pcall_kit</artifactId>
-  <version>2.3.1</version>
+  <version>3.0.1</version>
   <type>pom</type>
 </dependency>
-```
-
->方式二
-
- [下载aar SDK](https://www.anyrtc.io/resoure)
-
->1. 将下载好的rtp2pcall_kit-release.aar文件放入项目的libs目录中
->2. 在Model下的build.gradle文件添加如下代码依赖P2P SDK
-
-```
-android
-{
-
- repositories {
-        flatDir {dirs 'libs'}
-    }
-    
- }
-    
-```
-```
-dependencies {
-    compile(name: 'rtp2pcall_kit-release.aar', ext: 'aar')
-}
 ```
 
 ### 安装
@@ -88,7 +52,7 @@ Android API 15+
 
 ##### 替换开发者账号
 在[anyRTC官网](http://www.anyrtc.io)获取了开发者账号，AppID等信息后，替换DEMO中
-**P2PApplication**类中的开发者信息即可
+**DeveloperInfo**类中的开发者信息即可
 
 ### 操作步骤
 
@@ -99,11 +63,11 @@ Android API 15+
 3、选择呼叫模式开始呼叫，呼叫接通开始会话。
 
 ### 完整文档
-SDK集成，API介绍，详见官方完整文档：[点击查看](https://www.anyrtc.io/resoure)
+SDK集成，API介绍，详见官方完整文档：[点击查看](https://docs.anyrtc.io/v1/P2P/android.html)
 
-### Ios版anyRTC-P2P点对点呼叫
+### iOS版 P2P点对点呼叫
 
-[anyRTC-P2P-Ios](https://github.com/AnyRTC/anyRTC-P2P-iOS)
+[AR-P2P-iOS](https://github.com/AnyRTC/anyRTC-P2P-iOS)
 
 
 ### 支持的系统平台

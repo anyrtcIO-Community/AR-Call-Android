@@ -8,7 +8,7 @@ AR-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼
 
 ##### 扫码下载
 ![image](https://www.pgyer.com/app/qrcode/3blO)
-##### [点击下载](https://www.pgyer.com/app/qrcode/3blO)
+##### [点击下载](https://www.pgyer.com/3blO)
 
 
 ### SDK集成

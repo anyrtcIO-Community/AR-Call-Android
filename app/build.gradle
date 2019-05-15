@@ -24,7 +24,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:28.0.0'
     compile 'com.android.support:recyclerview-v7:28.0.0'
-    compile 'org.ar:rtp2pcall_kit:3.0.1'
+    compile 'org.ar:rtp2pcall_kit:3.0.2'
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.yanzhenjie.permission:support:2.0.1'

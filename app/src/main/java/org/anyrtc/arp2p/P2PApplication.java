@@ -56,11 +56,10 @@ public class P2PApplication extends Application implements Application.ActivityL
         registerActivityLifecycleCallbacks(this);
 
         //初始化P2P引擎并设置开发者信息  开发者信息可去anyrtc.io官网注册获取
-        ARP2PEngine.Inst().initEngineWithARInfo(getApplicationContext(), DeveloperInfo.DEVELOPERID,
-                DeveloperInfo.APPID, DeveloperInfo.APPKEY,
+        ARP2PEngine.Inst().initEngine(getApplicationContext(),
+                DeveloperInfo.APPID,
                 DeveloperInfo.APPTOKEN);
         //配置私有云  没有可不填写
-        ARP2PEngine.Inst().configServerForPriCloud("pro.anyrtc.io", 9060);
         mDBDao=new DBDao(this);
     }
 

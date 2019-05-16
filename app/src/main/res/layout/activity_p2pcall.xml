@@ -84,7 +84,7 @@
         android:textColor="@color/white"
         android:textSize="28sp" />
 
-    <org.anyrtc.arp2p.widgets.CircleImageView
+    <org.ar.arp2p.widgets.CircleImageView
         android:id="@+id/iv_icon"
         android:layout_width="130dp"
         android:layout_height="130dp"

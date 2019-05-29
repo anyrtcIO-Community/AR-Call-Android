@@ -19,7 +19,7 @@ AR-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼
 
 ```
 dependencies {
-   compile 'org.ar:rtp2pcall_kit:3.0.2'
+   compile 'org.ar:rtp2pcall_kit:3.0.3'
 }
 ```
 
@@ -28,7 +28,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtp2pcall_kit</artifactId>
-  <version>3.0.1</version>
+  <version>3.0.3</version>
   <type>pom</type>
 </dependency>
 ```

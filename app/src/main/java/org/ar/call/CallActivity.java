@@ -3,12 +3,15 @@ package org.ar.call;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,10 +35,11 @@ import java.util.TimeZone;
 public class CallActivity extends BaseActivity implements Chronometer.OnChronometerTickListener{
 
     private ImageView ivBackGround,iv_icon;
-    private RelativeLayout rlVideo;
+    private RelativeLayout rlVideo,rl_log_layout;
 
     private FrameLayout flAccept,flAudio,flVideo,flVoice;
-    private LinearLayout llAllBtnGroup;
+    private LinearLayout llAllBtnGroup,ll_right_btns;
+    private ImageButton btn_snap,btn_camera,btn_log;
 
     private TextView tv_phone,tvStateTime;
 
@@ -50,6 +54,8 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
     private String selfId;
     private ARCallKit arCallKit;
     private ARVideoView arVideoView;
+    RecyclerView rvLogList;
+    LogAdapter logAdapter;
 
     private SimpleDateFormat sdf;
     private long startTime;
@@ -72,10 +78,19 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         flVideo=findViewById(R.id.fl_video);
         flVoice=findViewById(R.id.fl_voice);
 
+        rl_log_layout = findViewById(R.id.rl_log_layout);
+        rvLogList = findViewById(R.id.rv_log);
+        rvLogList.setLayoutManager(new LinearLayoutManager(this));
+        logAdapter = new LogAdapter();
+        rvLogList.setAdapter(logAdapter);
 
         ivBackGround=findViewById(R.id.iv_background);
         rlVideo=findViewById(R.id.rl_rtc_videos);
         llAllBtnGroup=findViewById(R.id.ll_all_btn_group);
+        ll_right_btns=findViewById(R.id.ll_right_btns);
+        btn_camera=findViewById(R.id.btn_camera);
+        btn_log=findViewById(R.id.btn_log);
+        btn_snap=findViewById(R.id.btn_snap);
         tv_phone=findViewById(R.id.tv_phone);
         tvStateTime=findViewById(R.id.tv_state_time);
         tvAccept=findViewById(R.id.ibtn_accept);
@@ -147,6 +162,9 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         flAccept.setVisibility(View.GONE);
         flAudio.setVisibility(View.VISIBLE);
         flVoice.setVisibility(View.VISIBLE);
+        ll_right_btns.setVisibility(View.VISIBLE);
+        btn_snap.setVisibility(View.GONE);
+        btn_camera.setVisibility(View.GONE);
     }
 
     public void START_VIDEO_CALL(){
@@ -158,6 +176,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         flAccept.setVisibility(View.GONE);
         flAudio.setVisibility(View.VISIBLE);
         flVideo.setVisibility(View.VISIBLE);
+        ll_right_btns.setVisibility(View.VISIBLE);
     }
 
     public void START_VIDEO_PRO_CALL(){
@@ -167,6 +186,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         flAccept.setVisibility(View.GONE);
         flAudio.setVisibility(View.VISIBLE);
         flVideo.setVisibility(View.VISIBLE);
+        ll_right_btns.setVisibility(View.VISIBLE);
         if (isCalled){
             arCallKit.setLocalVideoCapturer(arVideoView.openLocalVideoRender().GetRenderPointer());
         }else {
@@ -199,10 +219,11 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
 
 
     @Override
-    public void onRTCAcceptCall(String strPeerUserId) {
+    public void onRTCAcceptCall(final String strPeerUserId) {
         CallActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                logAdapter.addData("回调：onRTCAcceptCall peerId:"+strPeerUserId);
                 if (callMode == ARCallMode.audio.level){
                     START_AUDIO_CALL();
                 }else if (callMode == ARCallMode.video.level){
@@ -277,10 +298,11 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
     }
 
     @Override
-    public void onRTCOpenRemoteVideoRender(String userId, final String strVidRenderId, String userData) {
+    public void onRTCOpenRemoteVideoRender(final String userId, final String strVidRenderId, String userData) {
         CallActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                logAdapter.addData("回调：onRTCOpenRemoteVideoRender userId:"+userId);
                 if (isCalled){
                     if (callMode==ARCallMode.video_pro.level){
                         if (arVideoView.getLocalVideoRender()==null) {//这个主要判断 视频优先模式时  远程图像还未显示 就接受打开本地 导致远程图像显示在上方（预览位置）
@@ -299,10 +321,11 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
     }
 
     @Override
-    public void onRTCCloseRemoteVideoRender(String userId, final String strVidRenderId) {
+    public void onRTCCloseRemoteVideoRender(final String userId, final String strVidRenderId) {
         CallActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                logAdapter.addData("回调：onRTCCloseRemoteVideoRender userId:"+userId);
                 arVideoView.removeRemoteRender(strVidRenderId);
             }
         });
@@ -418,6 +441,19 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
                     setSpeakerOn(true);
                     tvVoice.setSelected(true);
                 }
+                break;
+            case R.id.btn_snap:
+                //仅作演示保存本地像图片
+                arVideoView.saveLocalPicture(CallApplication.getPath(), "Local" + arVideoView.getStringDate() + ".jpg");
+                break;
+            case R.id.btn_camera:
+                arCallKit.switchCamera();
+                break;
+            case R.id.btn_log:
+                rl_log_layout.setVisibility(View.VISIBLE);
+                break;
+            case R.id.ibtn_close_log:
+                rl_log_layout.setVisibility(View.GONE);
                 break;
         }
     }

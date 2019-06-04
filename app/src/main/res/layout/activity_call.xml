@@ -187,6 +187,81 @@
              />
         </FrameLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_right_btns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginRight="12dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/btn_snap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_jietu"
+            android:layout_marginLeft="10dp"
+            android:onClick="OnBtnClicked"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btn_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_fanzhuan"
+            android:layout_marginTop="12dp"
+            android:onClick="OnBtnClicked"
+            android:layout_marginLeft="10dp"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btn_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_rizhi"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="OnBtnClicked"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_log_layout"
+        android:layout_width="match_parent"
+        android:background="#E6FFFFFF"
+        android:paddingTop="25dp"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:layout_marginLeft="12dp"
+            android:textSize="26sp"
+            android:text="日志"/>
+
+        <ImageButton
+            android:id="@+id/ibtn_close_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_guanbi"
+            android:onClick="OnBtnClicked"
+            android:background="@null"
+            android:padding="12dp"
+            android:layout_alignParentRight="true"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_log"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ibtn_close_log"
+            android:layout_marginTop="12dp"></android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
     <Chronometer
         android:id="@+id/chronometer"
         android:layout_width="0dp"

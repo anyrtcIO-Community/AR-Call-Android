@@ -13,6 +13,8 @@ import org.ar.arcall.ARCallMode;
 import org.ar.arcall.ARMeetZoomMode;
 import org.ar.common.enums.ARNetQuality;
 
+import java.io.File;
+
 
 /**
  * Created by liuxiaozhong on 2019/4/11.
@@ -42,7 +44,7 @@ public class CallApplication extends Application implements Application.Activity
         registerActivityLifecycleCallbacks(this);
         //设置开发者信息  appID + token
         //配置私有云
-        ARCallEngine.Inst().initEngineWithAppInfo(this, DeveloperInfo.APPID, DeveloperInfo.APPTOKEN);
+        ARCallEngine.Inst().initEngine(this, DeveloperInfo.APPID, DeveloperInfo.APPTOKEN);
 
     }
 
@@ -66,7 +68,9 @@ public class CallApplication extends Application implements Application.Activity
         return arCallKit;
     }
 
-
+    public static String getPath() {
+        return FileUtil.getRootPath(application).getAbsolutePath() + File.separator + "ARCall/pic";
+    }
 
     ARCallEvent event = new ARCallEvent() {
         @Override

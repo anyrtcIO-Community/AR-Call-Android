@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.ar.common.utils.ScreenUtils;
 import org.webrtc.EglBase;
@@ -19,7 +20,13 @@ import org.webrtc.RendererCommon;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoRenderer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -730,5 +737,65 @@ public class ARVideoView implements View.OnTouchListener{
                 return render;
         }
         return null;
+    }
+
+    public void saveLocalPicture(final String path, final String fileName) {
+        if (LocalVideoRender!=null) {
+            LocalVideoRender.surfaceViewRenderer.addFrameListener(new EglRenderer.FrameListener() {
+                @Override
+                public void onFrame(Bitmap bitmap) {
+                    saveBitmap(bitmap, path, fileName);
+                }
+            }, 1f);
+        }
+    }
+
+    public void saveRemotePicture(final String videoId, final String path, final String fileName) {
+        VideoView remoteVideoRender = mRemoteRenderList.get(videoId);
+        if (remoteVideoRender!=null) {
+            remoteVideoRender.surfaceViewRenderer.addFrameListener(new EglRenderer.FrameListener() {
+                @Override
+                public void onFrame(Bitmap bitmap) {
+                    Log.d("surfaceView", getStringDate() + "  " + bitmap.toString());
+                    saveBitmap(bitmap, path, fileName);
+                }
+            }, 1f);
+        }
+    }
+
+    /**
+     * 获取当前时间戳
+     * @return yyyy-MM-dd HH:mm:ss
+     */
+    public  String getStringDate() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(currentTime);
+        return dateString;
+    }
+
+    /**
+     * 保存bitmap到本地
+     *
+     * @return
+     */
+    public void saveBitmap(Bitmap bmp,String path,String name) {
+        // 首先保存图片
+        File appDir = new File(path);
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
+        File file = new File(appDir, name);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            Toast.makeText(mContext,"已截图保存",Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

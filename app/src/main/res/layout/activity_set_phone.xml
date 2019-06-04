@@ -22,8 +22,8 @@
             android:gravity="center"
             android:textColor="#666666"
             android:layout_gravity="center_horizontal"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:text="Call"/>
+            android:drawableTop="@drawable/icon_p2p"
+            android:text="@string/app_name"/>
     </FrameLayout>
     <android.support.v4.widget.Space
         android:layout_width="match_parent"

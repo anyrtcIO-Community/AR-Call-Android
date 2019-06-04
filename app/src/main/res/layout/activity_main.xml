@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.ar.call.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FCFAFF"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_space"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"></View>
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FCFAFF">
+
+            <ImageButton
+                android:id="@+id/btn_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:padding="12dp"
+                android:onClick="btnOnclick"
+                android:src="@drawable/img_log_out" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="18899099999"
+                    android:textColor="#333333"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="离线"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:hint="请输入呼叫号码"
+        android:textSize="12sp"
+        android:inputType="number"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/shape_white"/>
+
+    <Button
+        android:id="@+id/btn_audio"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="音频呼叫"
+        android:textColor="#FFFFFF"
+        android:onClick="btnOnclick"
+        android:background="@drawable/shape_blue"/>
+
+    <Button
+        android:id="@+id/btn_video"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="视频呼叫"
+        android:onClick="btnOnclick"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/shape_blue"/>
+
+    <Button
+        android:id="@+id/btn_video_pro"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="视频优先呼叫"
+        android:textColor="#FFFFFF"
+        android:onClick="btnOnclick"
+        android:background="@drawable/shape_blue"/>
+
+</LinearLayout>

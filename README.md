@@ -1,7 +1,7 @@
 
-### AR-P2P-Android SDK for Android
+### AR-Call-Android SDK for Android
 ### 简介
-AR-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼叫模式，基于ARP2PEngine SDK，适用于网络电话、活动、教育等多种呼叫场景。。
+AR-Call-Android 呼叫，支持视频、语音、优先视频等多种呼叫模式，基于ARCallEngine SDK，适用于网络电话、活动、教育等多种呼叫场景。。
 
 
 ### app体验
@@ -12,14 +12,14 @@ AR-P2P-Android点对点呼叫，支持视频、语音、优先视频等多种呼
 
 
 ### SDK集成
-# > 方式一（推荐）[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/p2p/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/p2p/_latestVersion)
+# > 方式一（推荐）[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/call/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/call/_latestVersion)
 
 
 添加Jcenter仓库 Gradle依赖：
 
 ```
 dependencies {
-   compile 'org.ar:rtp2pcall_kit:3.0.3'
+    compile 'org.ar:arcall_kit:3.0.3'
 }
 ```
 
@@ -27,7 +27,7 @@ dependencies {
 ```
 <dependency>
   <groupId>org.ar</groupId>
-  <artifactId>rtp2pcall_kit</artifactId>
+  <artifactId>arcall_kit</artifactId>
   <version>3.0.3</version>
   <type>pom</type>
 </dependency>

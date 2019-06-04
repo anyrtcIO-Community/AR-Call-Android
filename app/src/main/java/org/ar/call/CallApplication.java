@@ -42,7 +42,7 @@ public class CallApplication extends Application implements Application.Activity
         registerActivityLifecycleCallbacks(this);
         //设置开发者信息  appID + token
         //配置私有云
-        ARCallEngine.Inst().initEngine(this, DeveloperInfo.APPID, DeveloperInfo.APPTOKEN);
+        ARCallEngine.Inst().initEngineWithAppInfo(this, DeveloperInfo.APPID, DeveloperInfo.APPTOKEN);
 
     }
 

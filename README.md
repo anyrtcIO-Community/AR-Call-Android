@@ -19,7 +19,7 @@ AR-Call-Android 呼叫，支持视频、语音、优先视频等多种呼叫模�
 
 ```
 dependencies {
-    compile 'org.ar:arcall_kit:3.0.4'
+    compile 'org.ar:arcall_kit:3.0.5'
 }
 ```
 
@@ -28,7 +28,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>arcall_kit</artifactId>
-  <version>3.0.3</version>
+  <version>3.0.5</version>
   <type>pom</type>
 </dependency>
 ```

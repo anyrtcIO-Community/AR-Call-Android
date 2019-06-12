@@ -9,3 +9,5 @@
 /captures
 .externalNativeBuild
 arcall_kit/build/poms/pom-default.xml
+arcall_kit/
+.idea/

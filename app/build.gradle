@@ -27,5 +27,5 @@ dependencies {
     compile 'com.yanzhenjie.permission:support:2.0.1'
     compile 'com.android.support:recyclerview-v7:28.0.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
-    compile 'org.ar:arcall_kit:3.0.5'
+    compile 'org.ar:arcall_kit:3.0.6'
 }

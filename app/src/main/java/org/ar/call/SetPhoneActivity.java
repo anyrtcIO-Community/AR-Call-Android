@@ -44,12 +44,12 @@ public class SetPhoneActivity extends BaseActivity {
                     return;
                 }
 
-                if (AndPermission.hasPermissions(SetPhoneActivity.this, Permission.RECORD_AUDIO,Permission.CAMERA)){
+                if (AndPermission.hasPermissions(SetPhoneActivity.this, Permission.RECORD_AUDIO,Permission.CAMERA,Permission.WRITE_EXTERNAL_STORAGE,Permission.READ_EXTERNAL_STORAGE)){
                     SpUtil.putString(Contants.PHONE,etPhone.getText().toString().trim());
                     startActivity(MainActivity.class);
                     finish();
                 }else {
-                    AndPermission.with(SetPhoneActivity.this).runtime().permission(Permission.RECORD_AUDIO, Permission.CAMERA).onGranted(new Action<List<String>>() {
+                    AndPermission.with(SetPhoneActivity.this).runtime().permission(Permission.RECORD_AUDIO, Permission.CAMERA,Permission.WRITE_EXTERNAL_STORAGE,Permission.READ_EXTERNAL_STORAGE).onGranted(new Action<List<String>>() {
                         @Override
                         public void onAction(List<String> data) {
                             SpUtil.putString(Contants.PHONE, etPhone.getText().toString().trim());
@@ -60,7 +60,7 @@ public class SetPhoneActivity extends BaseActivity {
                     }).onDenied(new Action<List<String>>() {
                         @Override
                         public void onAction(List<String> data) {
-                            Toast.makeText(SetPhoneActivity.this, "请授予相机、录音权限", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SetPhoneActivity.this, "请授予相机、录音、文件读写权限", Toast.LENGTH_SHORT).show();
                         }
                     }).start();
                 }

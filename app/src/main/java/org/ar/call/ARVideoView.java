@@ -739,25 +739,29 @@ public class ARVideoView implements View.OnTouchListener{
         return null;
     }
 
-    public void saveLocalPicture(final String path, final String fileName) {
+    public void saveLocalPicture() {
         if (LocalVideoRender!=null) {
             LocalVideoRender.surfaceViewRenderer.addFrameListener(new EglRenderer.FrameListener() {
                 @Override
                 public void onFrame(Bitmap bitmap) {
-                    saveBitmap(bitmap, path, fileName);
+                  if (bitmap!=null){
+                      SaveBitmapUtils.saveImageToGallery(mContext,bitmap);
+                  }
                 }
             }, 1f);
         }
     }
 
-    public void saveRemotePicture(final String videoId, final String path, final String fileName) {
+    public void saveRemotePicture(final String videoId) {
         VideoView remoteVideoRender = mRemoteRenderList.get(videoId);
         if (remoteVideoRender!=null) {
             remoteVideoRender.surfaceViewRenderer.addFrameListener(new EglRenderer.FrameListener() {
                 @Override
                 public void onFrame(Bitmap bitmap) {
                     Log.d("surfaceView", getStringDate() + "  " + bitmap.toString());
-                    saveBitmap(bitmap, path, fileName);
+                    if (bitmap!=null){
+                        SaveBitmapUtils.saveImageToGallery(mContext,bitmap);
+                    }
                 }
             }, 1f);
         }

@@ -444,7 +444,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
                 break;
             case R.id.btn_snap:
                 //仅作演示保存本地像图片
-                arVideoView.saveLocalPicture(CallApplication.getPath(), "Local" + arVideoView.getStringDate() + ".jpg");
+                arVideoView.saveLocalPicture();
                 break;
             case R.id.btn_camera:
                 arCallKit.switchCamera();

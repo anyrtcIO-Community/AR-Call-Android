@@ -19,7 +19,7 @@ AR-Call-Android 呼叫，支持视频、语音、优先视频等多种呼叫模�
 
 ```
 dependencies {
-    compile 'org.ar:arcall_kit:3.0.7'
+    compile 'org.ar:arcall_kit:3.1.0'
 }
 ```
 
@@ -28,10 +28,19 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>arcall_kit</artifactId>
-  <version>3.0.7</version>
+  <version>3.1.0</version>
   <type>pom</type>
 </dependency>
 ```
+
+###更新日志
+
+V3.1.0
+
+增加onRTCJoinRoomOk回调
+去除onRTCMakeCall回调中第一个MeetId参数
+turnOn方法增加userData参数
+ARUserOption类中去除userData参数
 
 ### 安装
 

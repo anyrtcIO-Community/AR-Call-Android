@@ -91,13 +91,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             BaseActivity.this.onDisconnect(i);
         }
 
+        @Override
+        public void onRTCJoinRoomOk(String s) {
+
+        }
+
+
 
         @Override
-        public void onRTCMakeCall(final String meetId, final String strPeerUserId, final ARCallMode arCallMode, final String strUserData, String strExtend) {
+        public void onRTCMakeCall(final String strPeerUserId, final ARCallMode arCallMode, final String strUserData, String strExtend) {
             BaseActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("ARCALL", "onRTCMakeCall meetId=" + meetId + "strPeerUserId=" + strPeerUserId);
+                    Log.d("ARCALL", "onRTCMakeCall "+ "strPeerUserId=" + strPeerUserId);
 
                     Bundle bundle = new Bundle();
                     bundle.putString(Contants.CALL_ID, strPeerUserId);//呼叫人号码

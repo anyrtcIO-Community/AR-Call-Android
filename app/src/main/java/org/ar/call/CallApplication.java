@@ -102,14 +102,20 @@ public class CallApplication extends Application implements Application.Activity
             }
         }
 
+        @Override
+        public void onRTCJoinRoomOk(String s) {
+
+        }
+
+
 
         @Override
-        public void onRTCMakeCall(String strMeetId, String strPeerUserId, ARCallMode nCallMode, String strUserData, String strExtend) {
+        public void onRTCMakeCall(String strPeerUserId, ARCallMode nCallMode, String strUserData, String strExtend) {
             if (curActivity instanceof CallActivity) {
 
             }else {
                 if (null != arCallEvent) {
-                    arCallEvent.onRTCMakeCall(strPeerUserId, strPeerUserId, nCallMode, strUserData, strExtend);
+                    arCallEvent.onRTCMakeCall(strPeerUserId, nCallMode, strUserData, strExtend);
                 }
             }
         }

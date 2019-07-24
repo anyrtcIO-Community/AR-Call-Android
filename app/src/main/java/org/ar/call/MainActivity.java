@@ -17,6 +17,8 @@ import org.ar.arcall.ARCallKit;
 import org.ar.arcall.ARCallMode;
 import org.ar.arcall.ARMeetZoomMode;
 import org.ar.common.enums.ARNetQuality;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends BaseActivity {
@@ -50,7 +52,7 @@ public class MainActivity extends BaseActivity {
         }
         tvPhone.setText(selfPhone);
         if (arCallKit.isTurnOff()) {
-            arCallKit.turnOn(selfPhone);
+            arCallKit.turnOn(selfPhone,getUserData());
         }
             findViewById(R.id.btn_out).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -181,7 +183,15 @@ public class MainActivity extends BaseActivity {
     public void onRTCAVStatus(String strRTCPeerId, boolean bAudio, boolean bVideo) {
 
     }
-
+    public String getUserData() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("nickName",selfPhone);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 
     public void btnOnclick (View view){
             if (etContent.getText().toString().isEmpty()) {

@@ -131,7 +131,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
             }
             flAccept.setVisibility(View.VISIBLE);
         }else {//主动呼叫
-            arCallKit.makeCallUser(callId,new ARUserOption(ARCallMode.getObject(callMode)));
+            arCallKit.makeCallUser(callId,new ARUserOption(ARCallMode.getObject(callMode),getUserData()));
             if (callMode==ARCallMode.video_pro.level){//视频优先呼叫 先打开本地摄像头
                 arCallKit.setLocalVideoCapturer(arVideoView.openLocalVideoRender().GetRenderPointer());
                 rlVideo.setVisibility(View.GONE);
@@ -140,6 +140,16 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         }
 
 
+    }
+
+    public String getUserData() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("nickName","哈哈哈哈");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
     private Runnable mAudioRunnable = new Runnable() {
         @Override

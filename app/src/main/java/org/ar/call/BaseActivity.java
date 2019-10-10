@@ -91,11 +91,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             BaseActivity.this.onDisconnect(i);
         }
 
-
+        @Override
+        public void onRTCJoinRoomOk(String meetId) {
+            Log.d("ARCALL", "onRTCJoinRoomOk meetId=" + meetId);
+        }
 
 
         @Override
-        public void onRTCMakeCall(String s,final String strPeerUserId, final ARCallMode arCallMode, final String strUserData, String strExtend) {
+        public void onRTCMakeCall(final String strPeerUserId, final ARCallMode arCallMode, final String strUserData, String strExtend) {
             BaseActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

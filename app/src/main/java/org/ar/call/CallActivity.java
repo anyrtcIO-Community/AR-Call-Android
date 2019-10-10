@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Chronometer;
@@ -43,6 +44,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
 
     private TextView tv_phone,tvStateTime;
 
+    private LinearLayout ll_btns;
     TextView tvAccept,tvAudio,tvVideo,tvHangUp,tvVoice;
     Chronometer chronometer;
 
@@ -77,7 +79,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         flAudio=findViewById(R.id.fl_audio);
         flVideo=findViewById(R.id.fl_video);
         flVoice=findViewById(R.id.fl_voice);
-
+        ll_btns=findViewById(R.id.ll_btns);
         rl_log_layout = findViewById(R.id.rl_log_layout);
         rvLogList = findViewById(R.id.rv_log);
         rvLogList.setLayoutManager(new LinearLayoutManager(this));
@@ -101,7 +103,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         tvHangUp=findViewById(R.id.ibtn_hang_up);
         chronometer=findViewById(R.id.chronometer);
         chronometer.setOnChronometerTickListener(this);
-        arVideoView = new ARVideoView(rlVideo, ARCallEngine.Inst().Egl(),this,false);
+        arVideoView = new ARVideoView(rlVideo, ARCallEngine.Inst().Egl(),this);
         arVideoView.setVideoViewLayout(false, Gravity.CENTER,LinearLayout.HORIZONTAL);
         sdf = new SimpleDateFormat("mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -502,9 +504,31 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            if (IS_CALLING){
+                arCallKit.stopCapturer();
+                arCallKit.endCall(callId);
+                finish();
+            }else {
+                if (isCalled){
+                    arCallKit.rejectCall(callId);
+                    stopRing();
+                    finish();
+                }else {
 
-
-
+                    if (callMode==ARCallMode.video_pro.level){
+                        arCallKit.stopCapturer();
+                    }
+                    arCallKit.endCall(callId);
+                    stopRing();
+                    finish();
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onDestroy() {
@@ -523,4 +547,18 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
             mAudioRunnable=null;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ll_btns.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (arVideoView!=null&&ll_btns!=null) {
+                    arVideoView.setBottomHeight(ll_btns.getMeasuredHeight());
+                }
+            }
+        },100);
+    }
+
 }

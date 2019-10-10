@@ -34,6 +34,16 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+    public String getUserData() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("nickName", selfPhone);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
     @Override
     public void initView(Bundle savedInstanceState) {
         arCallKit = CallApplication.get().getArCallKit();
@@ -52,7 +62,7 @@ public class MainActivity extends BaseActivity {
         }
         tvPhone.setText(selfPhone);
         if (arCallKit.isTurnOff()) {
-            arCallKit.turnOn(selfPhone);
+            arCallKit.turnOn(selfPhone,getUserData());
         }
             findViewById(R.id.btn_out).setOnClickListener(new View.OnClickListener() {
                 @Override

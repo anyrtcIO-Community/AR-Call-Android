@@ -14,9 +14,6 @@ import org.ar.arcall.ARCallMode;
 import org.ar.arcall.ARMeetZoomMode;
 import org.ar.common.enums.ARNetQuality;
 
-/**
- * Created by liuxiaozhong on 2019/4/11.
- */
 public abstract class BaseActivity extends AppCompatActivity {
     protected ImmersionBar mImmersionBar;
     protected ARCallKit arCallKit;

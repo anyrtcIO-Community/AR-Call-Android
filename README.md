@@ -7,8 +7,7 @@ AR-Call-Android 呼叫，支持视频、语音、优先视频等多种呼叫模�
 ### app体验
 
 ##### 扫码下载
-![image](https://www.pgyer.com/app/qrcode/3blO)
-##### [点击下载](https://www.pgyer.com/3blO)
+##### [点击下载](https://fir.im/gyjh)
 
 
 ### SDK集成
@@ -19,7 +18,7 @@ AR-Call-Android 呼叫，支持视频、语音、优先视频等多种呼叫模�
 
 ```
 dependencies {
-    compile 'org.ar:arcall_kit:3.1.0'
+    compile 'org.ar:arcall_kit:3.1.5'
 }
 ```
 
@@ -28,7 +27,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>arcall_kit</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.5</version>
   <type>pom</type>
 </dependency>
 ```

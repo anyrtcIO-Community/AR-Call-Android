@@ -25,12 +25,14 @@ import org.ar.arcall.ARCallMode;
 import org.ar.arcall.ARMeetZoomMode;
 import org.ar.arcall.ARUserOption;
 import org.ar.common.enums.ARNetQuality;
+import org.ar.common.utils.ARAudioManager;
 import org.ar.common.utils.AR_AudioManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 import java.util.TimeZone;
 
 public class CallActivity extends BaseActivity implements Chronometer.OnChronometerTickListener{
@@ -63,7 +65,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
     private long startTime;
     private String DisPlayTime = "00:00";
 
-    private AR_AudioManager rtcAudioManager;
+    private ARAudioManager rtcAudioManager;
     @Override
     public int getLayoutId() {
         return R.layout.activity_call;
@@ -109,10 +111,13 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 
 
-        rtcAudioManager = AR_AudioManager.create(getApplicationContext(), mAudioRunnable);
-//        rtcAudioManager.setProximitySensorChange(false);
-        rtcAudioManager.init();
-        rtcAudioManager.setAudioDevice(AR_AudioManager.AudioDevice.SPEAKER_PHONE);
+        rtcAudioManager = ARAudioManager.create(this);
+        rtcAudioManager.start(new ARAudioManager.AudioManagerEvents() {
+            @Override
+            public void onAudioDeviceChanged(ARAudioManager.AudioDevice selectedAudioDevice, Set<ARAudioManager.AudioDevice> availableAudioDevices) {
+
+            }
+        });
         callId=getIntent().getStringExtra(Contants.CALL_ID);
         isCalled=getIntent().getBooleanExtra(Contants.IS_CALLED,true);
         callMode=getIntent().getIntExtra(Contants.CALL_MODE,0);
@@ -153,19 +158,7 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
         }
         return jsonObject.toString();
     }
-    private Runnable mAudioRunnable = new Runnable() {
-        @Override
-        public void run() {//自动切换听筒扬声器
-//            onAudioManagerChangedState();
-        }
-    };
 
-    private void onAudioManagerChangedState() {
-        // TODO(henrika): disable video if
-        // AppRTCAudioManager.AudioDevice.EARPIECE
-        // is active.
-        setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
-    }
     public void START_AUDIO_CALL(){
         stopRing();
         startTime = System.currentTimeMillis();
@@ -464,9 +457,9 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
     public void setSpeakerOn(boolean bOpen) {
         if (rtcAudioManager != null) {
             if (bOpen) {
-                rtcAudioManager.setAudioDevice(AR_AudioManager.AudioDevice.SPEAKER_PHONE);
+                rtcAudioManager.setDefaultAudioDevice(ARAudioManager.AudioDevice.SPEAKER_PHONE);
             } else {
-                rtcAudioManager.setAudioDevice(AR_AudioManager.AudioDevice.EARPIECE);
+                rtcAudioManager.setDefaultAudioDevice(ARAudioManager.AudioDevice.EARPIECE);
             }
         }
     }
@@ -543,8 +536,8 @@ public class CallActivity extends BaseActivity implements Chronometer.OnChronome
             arCallKit.endCall(callId);
         }
         if (rtcAudioManager!=null){
-            rtcAudioManager.close();
-            mAudioRunnable=null;
+            rtcAudioManager.stop();
+            rtcAudioManager=null;
         }
     }
 

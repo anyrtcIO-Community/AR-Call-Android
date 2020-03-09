@@ -45,7 +45,6 @@ public class CallApplication extends Application implements Application.Activity
         //设置开发者信息  appID + token
         //配置私有云
         ARCallEngine.Inst().initEngine(this, DeveloperInfo.APPID, DeveloperInfo.APPTOKEN);
-        ARCallEngine.Inst().configServerForPriCloud("106.14.220.123",9080);
 
     }
 
